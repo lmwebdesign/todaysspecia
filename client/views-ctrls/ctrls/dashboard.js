@@ -5,7 +5,13 @@ angular.module('todayspecial')
                     var errs = {
                         signin:false
                     };
+                    var states = {
+                        editingItem:false,
+                        addNewItem:false
+                    }
+
                     $scope.errors = errs;
+                    $scope.states = states;
 
                     $scope.login = function(data){
                         if(data != undefined){
@@ -31,6 +37,28 @@ angular.module('todayspecial')
 
                     $scope.addNewItem = function(item){
                         Menu.insert(item);
+                    }
+
+                    $scope.addNew = function(){
+                        states.addNewItem = true;
+                    }
+
+                    $scope.editItem = function(item){
+                        $scope.newItem = $meteor.object(Menu,item._id,false);
+                        states.editingItem = true; 
+                    }
+
+                    $scope.updateItem = function(item){
+                        $scope.newItem.save();
+                        states.editingItem = false; 
+                    }
+
+                    $scope.closeUpdate = function(){
+                        states.editingItem = false;
+                    }
+
+                    $scope.closeAddNew = function(){
+                        states.addNewItem = false;
                     }
 
                 }

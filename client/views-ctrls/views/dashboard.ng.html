@@ -13,26 +13,49 @@
 <div class="dashboard" ng-show="$root.currentUser">
     <section class="logout">
         <button ng-click="logout();">Log Out</button>
+        <div class="clearfix"></div>
     </section>
 
-    <section class="addnew">
-        <input type="text" ng-model="item.name" placeholder="enter item name">
-        <input type="number" ng-model="item.price" placeholder="enter item price">
-        <textarea ng-model="item.desc" placeholder="enter item description"></textarea>
-        <button ng-click="addNewItem(item);">Add Item</button>
-    </section>
+    <div class="overlay" ng-show="states.addNewItem">
+        <section class="addnew">
+            <h2>New Item</h2>
+            <input type="text" ng-model="item.name" placeholder="enter item name">
+            <input type="number" ng-model="item.price" placeholder="enter item price">
+            <textarea ng-model="item.desc" placeholder="enter item description"></textarea>
+
+            <button ng-click="closeAddNew()">cancel</button>
+            <button ng-click="addNewItem(item);">Add Item</button>
+            <div class="clearfix"></div>
+        </section>
+    </div>
 
     <section class="current">
-        <div class="item"  ng-repeat="item in menu">
+        <h2>Current Items</h2>
+        <div class="item"  ng-repeat="item in menu" ng-click="editItem(item)">
             <div class="name">
                 <p><strong>{{ item.name }}</strong></p>
             </div>
             <div class="price">
-                <p>{{ item.price }}</p>
+                <h3>{{ item.price }}</h3>
             </div>
             <div class="desc">
                 <p>{{ item.desc }}</p>
             </div>
         </div>
+        <button ng-click="addNew()">add new item</button>
     </section>
+
+    <div class="overlay" ng-show="states.editingItem">
+        <div class="editItem">
+            <h2>Edit Item</h2>
+            <input type="text" ng-model="newItem.name">
+            <input type="text" ng-model="newItem.price">
+            <textarea ng-model="newItem.desc"></textarea>
+
+            <button ng-click="closeUpdate()">cancel</button>
+            <button ng-click="updateItem(newItem)">update</button>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
 </div>
